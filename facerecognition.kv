@@ -1,4 +1,34 @@
-# Filename: facerecognition.kv
-
 <FaceRecognitionLayout>:
     orientation: 'vertical'
+    padding: dp(12)
+    spacing: dp(10)
+
+    Label:
+        text: "RLock Facial Recognition"
+        font_size: '22sp'
+        size_hint_y: None
+        height: dp(40)
+
+    Image:
+        id: preview
+        source: ''
+        allow_stretch: True
+        keep_ratio: True
+        size_hint_y: 0.7
+
+    Label:
+        id: status
+        text: "Welcome! Register or recognize your face."
+        size_hint_y: None
+        height: dp(40)
+
+    BoxLayout:
+        size_hint_y: None
+        height: dp(50)
+        spacing: dp(8)
+        Button:
+            text: "Register Face"
+            on_press: root.on_register()
+        Button:
+            text: "Recognize Face"
+            on_press: root.on_recognize()

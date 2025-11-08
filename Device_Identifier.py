@@ -5,20 +5,23 @@ import psutil
 import win32file
 
 def get_disk_serial_numbers():
+    import string
     serial_numbers = []
     if platform.system() == 'Windows':
         for partition in psutil.disk_partitions():
             try:
-                drive_letter = partition.mountpoint[:2]
+                drive_letter = partition.device
+                if not drive_letter.endswith("\\"):
+                    drive_letter += "\\"
                 volume_name = win32file.GetVolumeNameForVolumeMountPoint(drive_letter)
                 serial_number = win32file.GetVolumeInformation(volume_name)[1]
                 serial_numbers.append(str(serial_number))
             except Exception as e:
-                print(f"Error: {e}")
+                print(f"[WARN] Skipping {partition.device}: {e}")
     elif platform.system() == 'Linux':
-        # You may need to customize this part for Linux systems
         pass
     return serial_numbers
+
 
 def get_unique_identifier():
     # Generate a UUID
